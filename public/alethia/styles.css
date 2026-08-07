@@ -406,9 +406,7 @@ html, body {
 @media (min-width: 2560px) { :not(.ssr-variant).hidden-7082r9 { display: none !important; } }
 
 /* FIX 5: Force .ssr-variant containers to render their static HTML content */
-.ssr-variant {
-  display: contents !important;
-}
+
 
 /* FIX 6: Fix "Our Tech DSK" blue background (#200f85) -> dark theme */
 .framer-iws7gr {
