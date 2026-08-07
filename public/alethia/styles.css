@@ -386,7 +386,7 @@ html body { background: none; }
 
 /* FIX 3: Enable smooth mouse wheel scrolling & immediate hero display */
 html {
-  scroll-behavior: smooth !important;
+  
 }
 html, body {
   overflow-x: hidden !important;
@@ -478,4 +478,14 @@ html, body {
 .framer-17rhzq5 a,
 .framer-17rhzq5 button {
   pointer-events: auto !important;
+}
+
+
+/* Remove overscroll traps on Framer inner containers */
+.framer-j6MbD,
+.framer-hddp4i,
+[data-framer-component-type="NativeScroll"] {
+  overscroll-behavior: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
