@@ -1,17 +1,16 @@
 /**
- * High-End Scroll Reveal Animation Engine
- * - Smoothly fades in and slides up headings, paragraphs, and cards as you scroll down.
+ * Scroll Fade-In & Fade-Out Animation Engine
+ * - Text, headings, and cards fade in as they enter the viewport.
+ * - Text and section headings smoothly fade out as they scroll past the top of the viewport.
  */
 (function() {
-  function initScrollFadeAnimations() {
-    // Select all text containers, headings, paragraphs, and section cards
+  function initScrollFadeEngine() {
     const selector = [
+      '[data-framer-name="Title"]',
+      '[data-framer-name="Bottom"]',
       '[data-framer-component-type="RichTextContainer"]',
       'p.framer-text',
       'h1', 'h2', 'h3', 'h4', 'h5',
-      '[data-framer-name*="Section"]',
-      '[data-framer-name*="Card"]',
-      '[data-framer-name*="Block"]',
       '.framer-1ogqu74',
       '.framer-m2q0bb',
       '.framer-1tsm48c'
@@ -20,43 +19,39 @@
     const elements = document.querySelectorAll(selector);
     const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px 0px -60px 0px',
-      threshold: 0.1
-    };
+    function updateFadeOutOnScroll() {
+      const sy = window.scrollY || window.pageYOffset || 0;
 
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          el.style.setProperty('opacity', '1', 'important');
-          el.style.setProperty('transform', 'translate3d(0, 0, 0)', 'important');
-          obs.unobserve(el);
+      elements.forEach(el => {
+        const framerName = el.getAttribute('data-framer-name');
+        if (framerName === 'loading' || framerName === 'Preloader') return;
+
+        const rect = el.getBoundingClientRect();
+        
+        // Element is near top of viewport scrolling out -> Fade Out smoothly
+        if (rect.top < windowHeight * 0.25) {
+          const fadeOutFactor = Math.max(0, Math.min(1, rect.bottom / (windowHeight * 0.35)));
+          el.style.opacity = fadeOutFactor.toFixed(3);
+          el.style.transition = 'opacity 0.25s ease-out';
+        } else if (rect.top <= windowHeight * 0.85) {
+          // Element is fully in view -> Opacity 1
+          el.style.opacity = '1';
+          el.style.transition = 'opacity 0.4s ease-out';
+        } else {
+          // Below viewport -> Fade out
+          el.style.opacity = '0';
+          el.style.transition = 'opacity 0.4s ease-out';
         }
       });
-    }, observerOptions);
+    }
 
-    elements.forEach(el => {
-      const framerName = el.getAttribute('data-framer-name');
-      if (framerName === 'Title' || framerName === 'Light Home' || framerName === 'loading') return;
-
-      const rect = el.getBoundingClientRect();
-
-      // Top fold elements stay visible; below-the-fold elements prepare for smooth fade-in
-      if (rect.top > windowHeight * 0.75) {
-        el.style.setProperty('opacity', '0', 'important');
-        el.style.setProperty('transform', 'translate3d(0, 40px, 0)', 'important');
-        el.style.setProperty('transition', 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)', 'important');
-        el.style.setProperty('will-change', 'opacity, transform', 'important');
-        observer.observe(el);
-      }
-    });
+    window.addEventListener('scroll', updateFadeOutOnScroll, { passive: true });
+    updateFadeOutOnScroll();
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initScrollFadeAnimations);
+    document.addEventListener('DOMContentLoaded', initScrollFadeEngine);
   } else {
-    initScrollFadeAnimations();
+    initScrollFadeEngine();
   }
 })();
