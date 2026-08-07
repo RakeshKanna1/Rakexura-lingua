@@ -79,14 +79,7 @@ export default function Hero() {
         {/* Interactive Feature Highlight Video Container */}
         <div className="mt-8 relative rounded-2xl border border-[#c6f19d]/20 bg-[#0a120c]/80 backdrop-blur-xl p-2 sm:p-4 shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden group">
           <div className="relative rounded-xl overflow-hidden border border-[#c6f19d]/10 bg-[#060b07] aspect-video flex items-center justify-center">
-            <video
-              src="/scan.webm"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover opacity-90"
-            />
+            
             <div className="absolute bottom-4 left-4 right-4 z-20 flex flex-col sm:flex-row items-center justify-between p-4 rounded-xl bg-[#060b07]/80 backdrop-blur-md border border-[#c6f19d]/20 text-xs font-mono text-[#c6f19d]">
               <div className="flex items-center gap-3">
                 <span className="w-2.5 h-2.5 rounded-full bg-[#c6f19d] animate-ping" />
