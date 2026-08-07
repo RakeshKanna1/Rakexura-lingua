@@ -1,75 +1,62 @@
 /**
- * Proactive Scroll Reveal & Mouse Wheel Scroll Guarantee
- * - Guarantees 100% smooth, unblocked mouse ball / wheel scrolling.
- * - Unhides all SSR Variant content.
- * - Hero / Top Fold elements reveal INSTANTLY on load.
- * - Proactive scroll reveal triggers 300px ahead of viewport.
+ * High-End Scroll Reveal Animation Engine
+ * - Smoothly fades in and slides up headings, paragraphs, and cards as you scroll down.
  */
 (function() {
-  // Guarantee non-blocking mouse wheel scrolling
-  window.addEventListener('wheel', function(e) {
-    // Passive scroll listener allows instant native mouse wheel response
-  }, { passive: true });
+  function initScrollFadeAnimations() {
+    // Select all text containers, headings, paragraphs, and section cards
+    const selector = [
+      '[data-framer-component-type="RichTextContainer"]',
+      'p.framer-text',
+      'h1', 'h2', 'h3', 'h4', 'h5',
+      '[data-framer-name*="Section"]',
+      '[data-framer-name*="Card"]',
+      '[data-framer-name*="Block"]',
+      '.framer-1ogqu74',
+      '.framer-m2q0bb',
+      '.framer-1tsm48c'
+    ].join(',');
 
-  // Ensure body/html overflow remains unblocked
-  function enableScroll() {
-    document.documentElement.classList.remove('no-scroll');
-    document.body.classList.remove('no-scroll');
-    document.documentElement.style.overflowY = 'auto';
-    document.body.style.overflowY = 'auto';
-  }
+    const elements = document.querySelectorAll(selector);
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 
-  enableScroll();
-  window.addEventListener('load', enableScroll);
-  setTimeout(enableScroll, 500);
-
-  function initScrollReveal() {
-    const elements = document.querySelectorAll('[style*="opacity: 0"], [style*="opacity:0"], .ssr-variant [style*="opacity"]');
-    
     const observerOptions = {
       root: null,
-      rootMargin: '300px 0px 200px 0px',
-      threshold: 0.01
+      rootMargin: '0px 0px -60px 0px',
+      threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          revealElement(entry.target, false);
-          obs.unobserve(entry.target);
+          const el = entry.target;
+          el.style.setProperty('opacity', '1', 'important');
+          el.style.setProperty('transform', 'translate3d(0, 0, 0)', 'important');
+          obs.unobserve(el);
         }
       });
     }, observerOptions);
 
-    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-
     elements.forEach(el => {
       const framerName = el.getAttribute('data-framer-name');
-      if (framerName === 'loading' || framerName === 'Preloader') return;
+      if (framerName === 'Title' || framerName === 'Light Home' || framerName === 'loading') return;
 
       const rect = el.getBoundingClientRect();
-      
-      // Top fold elements reveal instantly
-      if (rect.top <= windowHeight * 1.2) {
-        revealElement(el, true);
-      } else {
+
+      // Top fold elements stay visible; below-the-fold elements prepare for smooth fade-in
+      if (rect.top > windowHeight * 0.75) {
+        el.style.setProperty('opacity', '0', 'important');
+        el.style.setProperty('transform', 'translate3d(0, 40px, 0)', 'important');
+        el.style.setProperty('transition', 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)', 'important');
+        el.style.setProperty('will-change', 'opacity, transform', 'important');
         observer.observe(el);
       }
     });
   }
 
-  function revealElement(el, instant) {
-    el.style.setProperty('opacity', '1', 'important');
-    if (instant) {
-      el.style.setProperty('transition', 'none', 'important');
-    } else {
-      el.style.setProperty('transition', 'opacity 0.6s ease-out, transform 0.6s ease-out', 'important');
-    }
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initScrollReveal);
+    document.addEventListener('DOMContentLoaded', initScrollFadeAnimations);
   } else {
-    initScrollReveal();
+    initScrollFadeAnimations();
   }
 })();
