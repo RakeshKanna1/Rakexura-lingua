@@ -364,74 +364,80 @@ html,body,#main{box-sizing:border-box;margin:0;padding:0}:root{-webkit-font-smoo
 html body { background: none; }
 
 
-/* ============================================================
-   Framer Static Export Fixes
-   Generated from breakpoint data in data-framer-hydrate-v2
-   ============================================================ */
 
-/* Fix 1: Ensure scrolling works (override no-scroll preloader class) */
+/* ================================================================
+   FRAMER STATIC EXPORT FIXES
+   Auto-generated from data-framer-hydrate-v2 breakpoints
+   ================================================================ */
+
+/* FIX 1: Kill the preloader overlay immediately */
+[data-framer-name="loading"],
+[data-framer-name="Preloader"] {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+
+/* FIX 2: Override no-scroll preloader class */
 .no-scroll {
   overflow: auto !important;
   height: auto !important;
 }
 
-/* Fix 2: Generate responsive hidden-* classes from Framer breakpoints */
-@media (min-width: 2560px) {
-  .hidden-na5ts5 { display: none !important; }
-}
-@media (min-width: 1920px) and (max-width: 2559.98px) {
-  .hidden-1vysmve { display: none !important; }
-}
-@media (min-width: 1440px) and (max-width: 1919.98px) {
-  .hidden-72rtr7 { display: none !important; }
-}
-@media (min-width: 1000px) and (max-width: 1439.98px) {
-  .hidden-1c6bc8t { display: none !important; }
-}
-@media (max-width: 999.98px) {
-  .hidden-amky93 { display: none !important; }
-}
-@media (max-width: 959.98px) {
-  .hidden-1kq58x9 { display: none !important; }
-}
-@media (min-width: 960px) and (max-width: 1439.98px) {
-  .hidden-tj5nip { display: none !important; }
-}
-@media (min-width: 1440px) and (max-width: 2559.98px) {
-  .hidden-1b9l3f5 { display: none !important; }
-}
-@media (min-width: 2560px) {
-  .hidden-7082r9 { display: none !important; }
-}
+/* FIX 3: REMOVED — page containers need overflow:hidden to clip scroll animations */
 
-/* Fix 3: Ensure the page wrapper is scrollable */
-.framer-Gyzzi.framer-72rtr7,
-.framer-Gyzzi.framer-1c6bc8t,
-.framer-Gyzzi.framer-na5ts5,
-.framer-Gyzzi.framer-1vysmve,
-.framer-Gyzzi.framer-amky93 {
-  overflow: visible !important;
-}
-
-/* Fix 4: Ensure body and html are scrollable */
+/* FIX 4: Ensure html/body scroll */
 html, body {
   overflow-x: hidden !important;
   overflow-y: auto !important;
 }
-
 html.lenis, html.lenis body {
   height: auto !important;
 }
 
-/* Mouse scroll fix */
-html, body {
+/* FIX 5: Generate responsive hidden-* breakpoint classes */
+@media (min-width: 2560px) { .hidden-na5ts5 { display: none !important; } }
+@media (min-width: 1920px) and (max-width: 2559.98px) { .hidden-1vysmve { display: none !important; } }
+@media (min-width: 1440px) and (max-width: 1919.98px) { .hidden-72rtr7 { display: none !important; } }
+@media (min-width: 1000px) and (max-width: 1439.98px) { .hidden-1c6bc8t { display: none !important; } }
+@media (max-width: 999.98px) { .hidden-amky93 { display: none !important; } }
+@media (max-width: 959.98px) { .hidden-1kq58x9 { display: none !important; } }
+@media (min-width: 960px) and (max-width: 1439.98px) { .hidden-tj5nip { display: none !important; } }
+@media (min-width: 1440px) and (max-width: 2559.98px) { .hidden-1b9l3f5 { display: none !important; } }
+@media (min-width: 2560px) { .hidden-7082r9 { display: none !important; } }
+
+/* FIX 6: REMOVED — opacity:0 elements are scroll animation starting states, must stay hidden */
+/* FIX 7: REMOVED — ssr-variant responsive variants must not all display at once */
+
+/* FIX 8: Fix the "Our Tech DSK" section blue background (#200f85)
+   This section is a scroll-driven storytelling area that uses scroll-triggered
+   animations to overlay content on top of the blue background. Without Framer's
+   scroll engine, the vivid blue is exposed. Override to the site's dark color. */
+.framer-iws7gr {
+  background-color: #0f0f0f !important;
+}
+
+/* FIX 9: Fix ALL scroll-trigger color overlays that show wrong colors
+   without Framer's scroll animation engine running.
+   These are colored strips positioned absolutely within the Our Tech DSK section:
+   - .framer-g08wuq: pink (#a6005e) / teal (#204469) overlay
+   - .framer-17eqet0: blue (#1b69cf) overlay
+   - .framer-kbyvwa: indigo (#3616f0) overlay
+   - .framer-1bmzy6o: blue (#2f32e0) overlay */
+.framer-g08wuq,
+.framer-17eqet0,
+.framer-kbyvwa,
+.framer-1bmzy6o {
+  background-color: transparent !important;
+}
+
+/* Final Lenis & Scroll Lock Safety Override */
+html, body, html.lenis, html.lenis body, body.no-scroll, html.no-scroll {
+  overflow-x: hidden !important;
   overflow-y: auto !important;
   height: auto !important;
+  max-height: none !important;
 }
 .no-scroll {
-  overflow-y: auto !important;
-  height: auto !important;
-}
-.lenis, .lenis-smooth {
   overflow-y: auto !important;
 }
