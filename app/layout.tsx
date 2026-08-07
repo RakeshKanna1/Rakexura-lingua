@@ -3,8 +3,14 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Alethia | Environmental Intelligence & Science-Backed Strategy",
-  description: "End-to-end environmental intelligence powered by science, blockchain, and transparent data.",
+  description: "Know your impact—precisely. End-to-end environmental intelligence powered by science, blockchain, and transparent data.",
+  icons: {
+    icon: "/alethia-icon-dark.png",
+    shortcut: "/alethia-icon-dark.png",
+    apple: "/alethia-icon-dark.png",
+  },
 };
+
 
 export default function RootLayout({
   children,
