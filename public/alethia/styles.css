@@ -461,3 +461,21 @@ html, body {
   left: 0 !important;
   transform: none !important;
 }
+
+
+/* Fixed 100vh overlay containers must allow mouse wheel events to pass through */
+.framer-dvtq0f,
+.framer-1pemywr,
+.framer-17rhzq5,
+.framer-aye2oj,
+.framer-1t2qatg {
+  pointer-events: none !important;
+}
+
+/* Allow interactive buttons & links inside hero overlays to receive clicks */
+.framer-dvtq0f a,
+.framer-dvtq0f button,
+.framer-17rhzq5 a,
+.framer-17rhzq5 button {
+  pointer-events: auto !important;
+}
