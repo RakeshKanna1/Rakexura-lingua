@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Alethia | Environmental Intelligence & Science-Backed Strategy",
+  title: "Alethia",
+
   description: "Know your impact—precisely. End-to-end environmental intelligence powered by science, blockchain, and transparent data.",
   icons: {
     icon: "/alethia-icon-dark.png",
