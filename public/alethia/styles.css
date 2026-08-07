@@ -422,3 +422,16 @@ html, body {
 html.lenis, html.lenis body {
   height: auto !important;
 }
+
+/* Mouse scroll fix */
+html, body {
+  overflow-y: auto !important;
+  height: auto !important;
+}
+.no-scroll {
+  overflow-y: auto !important;
+  height: auto !important;
+}
+.lenis, .lenis-smooth {
+  overflow-y: auto !important;
+}
