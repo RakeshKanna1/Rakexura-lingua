@@ -11,7 +11,7 @@
 	<script>try{if(localStorage.getItem("__framer_force_showing_editorbar_since")){const n=document.createElement("link");n.rel = "modulepreload";n.href="https://framer.com/edit/init.mjs";document.head.appendChild(n)}}catch(e){}</script>
 	<!-- Start of headStart -->
     <!-- Snippet: BdVYfH0bL -->
- <script> window.addEventListener("load", function () { document.documentElement.classList.add("no-scroll"); document.body.classList.add("no-scroll");setTimeout(function () { document.documentElement.classList.remove("no-scroll"); document.body.classList.remove("no-scroll"); }, 1000); }); </script>
+ 
 <!-- SnippetEnd: BdVYfH0bL -->
 
     <!-- End of headStart -->
@@ -48,231 +48,241 @@
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
 	<meta name="robots" content="max-image-preview:large"><link rel="canonical" href="https://www.alethia.earth/"><meta property="og:url" content="https://www.alethia.earth/"><!-- Start of headEnd -->
     <!-- Snippet: legacy-headEnd -->
-<!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4TSC0KS8G3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-4TSC0KS8G3');
-</script>
-<!-- SnippetEnd: legacy-headEnd -->
 
     <!-- End of headEnd -->
 <link rel="stylesheet" href="styles.css">
+
+
+
+
+
+
+
+
+
+
+
+<!-- Unified Master Site & Globe Controller -->
 <script>
   (function() {
-    // Native smooth wheel scroll fallback that guarantees scrolling on all mice & trackpads
-    window.addEventListener('wheel', function(e) {
-      if (e.defaultPrevented) return;
-      window.scrollBy(0, e.deltaY * 1.0);
-    }, { passive: true });
-  })();
-</script>
+    function initMasterSite() {
+      // Safeguard: Enforce body & html scrolling
+      document.documentElement.classList.remove('no-scroll');
+      document.body.classList.remove('no-scroll');
+      document.documentElement.style.overflowY = 'auto';
+      document.body.style.overflowY = 'auto';
 
+      // 1. Standalone Green 3D Tactical Globe
+      const globeRoot = document.getElementById('green-tactical-globe-root');
+      if (globeRoot && !globeRoot.querySelector('canvas')) {
+        globeRoot.innerHTML = '';
+        const canvas = document.createElement('canvas');
+        canvas.width = 540;
+        canvas.height = 540;
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.display = 'block';
+        globeRoot.appendChild(canvas);
 
+        const ctx = canvas.getContext('2d');
+        const cx = 270, cy = 270, R = 195;
+        let rotX = 0.2, rotY = 0;
+        let isDragging = false, startX = 0, startY = 0;
 
+        function drawGlobe() {
+          ctx.clearRect(0, 0, 540, 540);
 
-
-
-
-<script>
-  (function() {
-    function initStandaloneGreenGlobe() {
-      const container = document.getElementById('green-tactical-globe-root');
-      if (!container) return;
-
-      container.innerHTML = '';
-      const canvas = document.createElement('canvas');
-      canvas.width = 580;
-      canvas.height = 580;
-      canvas.style.width = '100%';
-      canvas.style.height = '100%';
-      canvas.style.display = 'block';
-      container.appendChild(canvas);
-
-      const ctx = canvas.getContext('2d');
-      const cx = 290, cy = 290, R = 210;
-      let rotX = 0.25, rotY = 0;
-      let isDragging = false, startX = 0, startY = 0;
-
-      // Latitude and Longitude grid lines
-      function drawGlobe() {
-        ctx.clearRect(0, 0, 580, 580);
-
-        // Atmosphere Outer Glow
-        const grad = ctx.createRadialGradient(cx, cy, R, cx, cy, R + 45);
-        grad.addColorStop(0, 'rgba(34, 197, 94, 0.45)');
-        grad.addColorStop(0.5, 'rgba(34, 197, 94, 0.15)');
-        grad.addColorStop(1, 'rgba(34, 197, 94, 0)');
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R + 45, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Ocean Disc
-        ctx.fillStyle = '#09120a';
-        ctx.beginPath();
-        ctx.arc(cx, cy, R, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#4ade80';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-
-        // Clip to sphere disc
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(cx, cy, R, 0, Math.PI * 2);
-        ctx.clip();
-
-        // Shading Overlay
-        const shade = ctx.createRadialGradient(cx - 50, cy - 50, 20, cx, cy, R);
-        shade.addColorStop(0, 'rgba(255, 255, 255, 0.08)');
-        shade.addColorStop(0.6, 'rgba(0, 0, 0, 0.1)');
-        shade.addColorStop(1, 'rgba(0, 0, 0, 0.65)');
-
-        // Draw Graticule Lines
-        ctx.strokeStyle = 'rgba(74, 222, 128, 0.28)';
-        ctx.lineWidth = 0.8;
-
-        for (let lat = -60; lat <= 60; lat += 30) {
+          // Outer Atmosphere Glow
+          const grad = ctx.createRadialGradient(cx, cy, R, cx, cy, R + 40);
+          grad.addColorStop(0, 'rgba(34, 197, 94, 0.4)');
+          grad.addColorStop(0.5, 'rgba(34, 197, 94, 0.12)');
+          grad.addColorStop(1, 'rgba(34, 197, 94, 0)');
+          ctx.fillStyle = grad;
           ctx.beginPath();
-          let started = false;
-          for (let lng = -180; lng <= 180; lng += 10) {
-            const radLat = lat * Math.PI / 180;
-            const radLng = (lng + rotY) * Math.PI / 180;
+          ctx.arc(cx, cy, R + 40, 0, Math.PI * 2);
+          ctx.fill();
 
-            const x = Math.cos(radLat) * Math.sin(radLng);
-            const y = Math.sin(radLat);
-            const z = Math.cos(radLat) * Math.cos(radLng);
-
-            // Rotate around X (tilt)
-            const rx = x;
-            const ry = y * Math.cos(rotX) - z * Math.sin(rotX);
-            const rz = y * Math.sin(rotX) + z * Math.cos(rotX);
-
-            if (rz > 0) {
-              const px = cx + rx * R;
-              const py = cy - ry * R;
-              if (!started) { ctx.moveTo(px, py); started = true; }
-              else { ctx.lineTo(px, py); }
-            } else {
-              started = false;
-            }
-          }
-          ctx.stroke();
-        }
-
-        for (let lng = -180; lng < 180; lng += 30) {
+          // Ocean Base
+          ctx.fillStyle = '#09120a';
           ctx.beginPath();
-          let started = false;
-          for (let lat = -80; lat <= 80; lat += 10) {
-            const radLat = lat * Math.PI / 180;
-            const radLng = (lng + rotY) * Math.PI / 180;
-
-            const x = Math.cos(radLat) * Math.sin(radLng);
-            const y = Math.sin(radLat);
-            const z = Math.cos(radLat) * Math.cos(radLng);
-
-            const rx = x;
-            const ry = y * Math.cos(rotX) - z * Math.sin(rotX);
-            const rz = y * Math.sin(rotX) + z * Math.cos(rotX);
-
-            if (rz > 0) {
-              const px = cx + rx * R;
-              const py = cy - ry * R;
-              if (!started) { ctx.moveTo(px, py); started = true; }
-              else { ctx.lineTo(px, py); }
-            } else {
-              started = false;
-            }
-          }
+          ctx.arc(cx, cy, R, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#4ade80';
+          ctx.lineWidth = 1.5;
           ctx.stroke();
-        }
 
-        // Draw Globe Nodes / Markers
-        const markers = [
-          { lat: 38.8, lng: -77.0, label: 'America' },
-          { lat: 48.8, lng: 2.3, label: 'Europe' },
-          { lat: 35.6, lng: 139.6, label: 'Asia' },
-          { lat: -15.7, lng: -47.8, label: 'S. America' },
-          { lat: -33.8, lng: 151.2, label: 'Australia' }
-        ];
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(cx, cy, R, 0, Math.PI * 2);
+          ctx.clip();
 
-        markers.forEach(m => {
-          const radLat = m.lat * Math.PI / 180;
-          const radLng = (m.lng + rotY) * Math.PI / 180;
+          // Graticule Lines
+          ctx.strokeStyle = 'rgba(74, 222, 128, 0.26)';
+          ctx.lineWidth = 0.8;
 
-          const x = Math.cos(radLat) * Math.sin(radLng);
-          const y = Math.sin(radLat);
-          const z = Math.cos(radLat) * Math.cos(radLng);
-
-          const rx = x;
-          const ry = y * Math.cos(rotX) - z * Math.sin(rotX);
-          const rz = y * Math.sin(rotX) + z * Math.cos(rotX);
-
-          if (rz > 0.1) {
-            const px = cx + rx * R;
-            const py = cy - ry * R;
-
-            ctx.fillStyle = '#22c55e';
+          for (let lat = -60; lat <= 60; lat += 30) {
             ctx.beginPath();
-            ctx.arc(px, py, 5, 0, Math.PI * 2);
-            ctx.fill();
+            let started = false;
+            for (let lng = -180; lng <= 180; lng += 10) {
+              const radLat = lat * Math.PI / 180;
+              const radLng = (lng + rotY) * Math.PI / 180;
 
-            ctx.strokeStyle = 'rgba(34, 197, 94, 0.6)';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.arc(px, py, 10, 0, Math.PI * 2);
+              const x = Math.cos(radLat) * Math.sin(radLng);
+              const y = Math.sin(radLat);
+              const z = Math.cos(radLat) * Math.cos(radLng);
+
+              const rx = x;
+              const ry = y * Math.cos(rotX) - z * Math.sin(rotX);
+              const rz = y * Math.sin(rotX) + z * Math.cos(rotX);
+
+              if (rz > 0) {
+                const px = cx + rx * R;
+                const py = cy - ry * R;
+                if (!started) { ctx.moveTo(px, py); started = true; }
+                else { ctx.lineTo(px, py); }
+              } else {
+                started = false;
+              }
+            }
             ctx.stroke();
-
-            ctx.fillStyle = '#e7ece9';
-            ctx.font = '10px monospace';
-            ctx.fillText(m.label, px + 12, py + 4);
           }
-        });
 
-        // Apply Shading
-        ctx.fillStyle = shade;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R, 0, Math.PI * 2);
-        ctx.fill();
+          for (let lng = -180; lng < 180; lng += 30) {
+            ctx.beginPath();
+            let started = false;
+            for (let lat = -80; lat <= 80; lat += 10) {
+              const radLat = lat * Math.PI / 180;
+              const radLng = (lng + rotY) * Math.PI / 180;
 
-        ctx.restore();
-      }
+              const x = Math.cos(radLat) * Math.sin(radLng);
+              const y = Math.sin(radLat);
+              const z = Math.cos(radLat) * Math.cos(radLng);
 
-      function animate() {
-        if (!isDragging) {
-          rotY += 0.35;
+              const rx = x;
+              const ry = y * Math.cos(rotX) - z * Math.sin(rotX);
+              const rz = y * Math.sin(rotX) + z * Math.cos(rotX);
+
+              if (rz > 0) {
+                const px = cx + rx * R;
+                const py = cy - ry * R;
+                if (!started) { ctx.moveTo(px, py); started = true; }
+                else { ctx.lineTo(px, py); }
+              } else {
+                started = false;
+              }
+            }
+            ctx.stroke();
+          }
+
+          // Globe Node Markers
+          const markers = [
+            { lat: 38.8, lng: -77.0, label: 'America' },
+            { lat: 48.8, lng: 2.3, label: 'Europe' },
+            { lat: 35.6, lng: 139.6, label: 'Asia' },
+            { lat: -15.7, lng: -47.8, label: 'S. America' },
+            { lat: -33.8, lng: 151.2, label: 'Australia' }
+          ];
+
+          markers.forEach(m => {
+            const radLat = m.lat * Math.PI / 180;
+            const radLng = (m.lng + rotY) * Math.PI / 180;
+
+            const x = Math.cos(radLat) * Math.sin(radLng);
+            const y = Math.sin(radLat);
+            const z = Math.cos(radLat) * Math.cos(radLng);
+
+            const rx = x;
+            const ry = y * Math.cos(rotX) - z * Math.sin(rotX);
+            const rz = y * Math.sin(rotX) + z * Math.cos(rotX);
+
+            if (rz > 0.1) {
+              const px = cx + rx * R;
+              const py = cy - ry * R;
+
+              ctx.fillStyle = '#22c55e';
+              ctx.beginPath();
+              ctx.arc(px, py, 4.5, 0, Math.PI * 2);
+              ctx.fill();
+
+              ctx.strokeStyle = 'rgba(34, 197, 94, 0.6)';
+              ctx.lineWidth = 1.5;
+              ctx.beginPath();
+              ctx.arc(px, py, 9, 0, Math.PI * 2);
+              ctx.stroke();
+
+              ctx.fillStyle = '#e7ece9';
+              ctx.font = '10px monospace';
+              ctx.fillText(m.label, px + 11, py + 3);
+            }
+          });
+
+          // Sphere Depth Shading
+          const shade = ctx.createRadialGradient(cx - 40, cy - 40, 20, cx, cy, R);
+          shade.addColorStop(0, 'rgba(255, 255, 255, 0.08)');
+          shade.addColorStop(0.65, 'rgba(0, 0, 0, 0.12)');
+          shade.addColorStop(1, 'rgba(0, 0, 0, 0.6)');
+          ctx.fillStyle = shade;
+          ctx.beginPath();
+          ctx.arc(cx, cy, R, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.restore();
         }
-        drawGlobe();
-        requestAnimationFrame(animate);
+
+        function animateGlobe() {
+          if (!isDragging) {
+            rotY += 0.3;
+          }
+          drawGlobe();
+          requestAnimationFrame(animateGlobe);
+        }
+
+        canvas.addEventListener('mousedown', e => {
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+        });
+        window.addEventListener('mousemove', e => {
+          if (!isDragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          rotY += dx * 0.4;
+          rotX = Math.max(-1.2, Math.min(1.2, rotX - dy * 0.005));
+          startX = e.clientX;
+          startY = e.clientY;
+        });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        animateGlobe();
       }
 
-      canvas.addEventListener('mousedown', e => {
-        isDragging = true;
-        startX = e.clientX;
-        startY = e.clientY;
-      });
-      window.addEventListener('mousemove', e => {
-        if (!isDragging) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        rotY += dx * 0.4;
-        rotX = Math.max(-1.2, Math.min(1.2, rotX - dy * 0.005));
-        startX = e.clientX;
-        startY = e.clientY;
-      });
-      window.addEventListener('mouseup', () => { isDragging = false; });
+      // 2. Smooth Scroll Reveal & Parallax Updates
+      const titleEl = document.querySelector('[data-framer-name="Title"]');
+      const bottomEl = document.querySelector('[data-framer-name="Bottom"]');
 
-      animate();
+      function onScrollUpdate() {
+        const sy = window.scrollY || window.pageYOffset || 0;
+        
+        // Hero title & subtitle smooth parallax fade out
+        if (titleEl) {
+          titleEl.style.transform = 'translate3d(0, ' + (-sy * 0.3) + 'px, 0)';
+          titleEl.style.opacity = Math.max(0, 1 - sy / 400).toFixed(3);
+        }
+        if (bottomEl) {
+          bottomEl.style.transform = 'translate3d(0, ' + (-sy * 0.2) + 'px, 0)';
+          bottomEl.style.opacity = Math.max(0, 1 - sy / 500).toFixed(3);
+        }
+      }
+
+      window.addEventListener('scroll', onScrollUpdate, { passive: true });
+      onScrollUpdate();
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initStandaloneGreenGlobe);
+      document.addEventListener('DOMContentLoaded', initMasterSite);
     } else {
-      initStandaloneGreenGlobe();
+      initMasterSite();
     }
   })();
 </script>
@@ -347,5 +357,5 @@
     <!-- End of bodyEnd -->
 
 
-<iframe id="__framer-editorbar" src="https://framer.com/edit?framerSiteId=012f01698a79bd2c497a0eaaf626b49408f2e9581facfc40ff033750ad3a4a3f&amp;source=www.alethia.earth&amp;features=%7B%22editorBarDisableFrameAncestorsSecurity%22%3Afalse%2C%22onPageLocalizationSupport%22%3Atrue%2C%22onPageMoveTool%22%3Atrue%7D&amp;loadStart=1786016729147" aria-hidden="true" allow="autoplay" tabindex="-1" class="status_hidden"></iframe><script src="/alethia/scroll-reveal.js" defer></script>
+<iframe id="__framer-editorbar" src="https://framer.com/edit?framerSiteId=012f01698a79bd2c497a0eaaf626b49408f2e9581facfc40ff033750ad3a4a3f&amp;source=www.alethia.earth&amp;features=%7B%22editorBarDisableFrameAncestorsSecurity%22%3Afalse%2C%22onPageLocalizationSupport%22%3Atrue%2C%22onPageMoveTool%22%3Atrue%7D&amp;loadStart=1786016729147" aria-hidden="true" allow="autoplay" tabindex="-1" class="status_hidden"></iframe>
 </body></html>
