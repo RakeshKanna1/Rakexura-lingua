@@ -1,0 +1,117 @@
+{
+  "name": "Alethia",
+  "description": "Know your impact—precisely. End-to-end environmental intelligence powered by science, blockchain, and transparent data you can trust.",
+  "ogImage": "https://framerusercontent.com/images/k8WA7briA9x0PBCfBvn6GdVLS4.png",
+  "colors": {
+    "primary": {
+      "50": "#f5faf5",
+      "100": "#ebf4ec",
+      "200": "#d0e6d2",
+      "300": "#add7af",
+      "400": "#7bc17f",
+      "500": "#53ac59",
+      "600": "#46904b",
+      "700": "#39753d",
+      "800": "#2b592e",
+      "900": "#244226",
+      "950": "#0f1f10"
+    },
+    "secondary": {
+      "50": "#f7fdf2",
+      "100": "#effae5",
+      "200": "#daf3c3",
+      "300": "#c6f19d",
+      "400": "#9cea52",
+      "500": "#7cdf20",
+      "600": "#68bb1b",
+      "700": "#559816",
+      "800": "#417411",
+      "900": "#325412",
+      "950": "#20360c"
+    },
+    "accent": {
+      "50": "#f0fcfe",
+      "100": "#e2f9fd",
+      "200": "#bbf1fb",
+      "300": "#99eeff",
+      "400": "#3ddfff",
+      "500": "#00d5ff",
+      "600": "#00b3d6",
+      "700": "#0091ad",
+      "800": "#006f85",
+      "900": "#08505e",
+      "950": "#05343d"
+    },
+    "neutral": {
+      "50": "#f7f7f7",
+      "100": "#f0f0f0",
+      "200": "#dbdbdb",
+      "300": "#c2c2c2",
+      "400": "#9e9e9e",
+      "500": "#808080",
+      "600": "#6b6b6b",
+      "700": "#575757",
+      "800": "#424242",
+      "900": "#333333",
+      "950": "#000000"
+    },
+    "success": "#22c55e",
+    "warning": "#f59e0b",
+    "error": "#ef4444"
+  },
+  "typography": {
+    "fontFamily": {
+      "sans": "sans-serif",
+      "display": "Geist Mono",
+      "mono": "Geist Mono"
+    },
+    "fontSize": {
+      "xs": "0.507rem",
+      "sm": "0.75rem",
+      "base": "1rem",
+      "lg": "1.25rem",
+      "xl": "1.5rem",
+      "2xl": "2.5rem",
+      "3xl": "3.5rem",
+      "4xl": "4.5rem"
+    },
+    "fontWeight": {
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600"
+    },
+    "lineHeight": {
+      "tight": "1.25",
+      "normal": "1.5",
+      "relaxed": "1.75"
+    }
+  },
+  "spacing": {
+    "0": "0",
+    "2": "0.375rem",
+    "3": "0.625rem",
+    "4": "1rem",
+    "5": "1.25rem",
+    "7": "1.75rem",
+    "10": "2.5rem",
+    "50": "12.5rem"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.1875rem",
+    "md": "0.75rem",
+    "lg": "1.5rem",
+    "xl": "6.1875rem",
+    "2xl": "1rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    "md": "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+    "lg": "0 10px 15px -3px rgb(0 0 0 / 0.1)",
+    "xl": "0 20px 25px -5px rgb(0 0 0 / 0.1)"
+  },
+  "gradients": {
+    "brand-1": "linear-gradient(rgb(15, 31, 16) 0%, rgba(15, 31, 16, 0) 100%)"
+  }
+}
