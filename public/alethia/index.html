@@ -113,6 +113,69 @@
   })();
 </script>
 
+
+<script>
+  (function() {
+    function initHeroDoubleScrollAnimation() {
+      const titleEl = document.querySelector('[data-framer-name="Title"]');
+      const bottomEl = document.querySelector('[data-framer-name="Bottom"]');
+      const scanEl = document.querySelector('[data-framer-name="Scan"]');
+      const rockAtras = document.querySelector('.framer-fsgiv3-container');
+      const rockMedio = document.querySelector('.framer-101jubh-container');
+      const rockFront = document.querySelector('.framer-h1yg0u-container');
+
+      function updateHeroParallax() {
+        const sy = window.scrollY || window.pageYOffset || 0;
+        const progress = Math.min(1, sy / 600);
+
+        // Stage 1 (0 to 450px): Hero title & subtitle multi-phase scroll
+        if (titleEl) {
+          titleEl.style.transform = 'translate3d(0, ' + (-sy * 0.35) + 'px, 0)';
+          titleEl.style.opacity = Math.max(0, 1 - sy / 450);
+        }
+        if (bottomEl) {
+          bottomEl.style.transform = 'translate3d(0, ' + (-sy * 0.2) + 'px, 0)';
+          bottomEl.style.opacity = Math.max(0, 1 - sy / 550);
+        }
+        if (scanEl) {
+          const scaleVal = 1.0 + progress * 0.25;
+          scanEl.style.transform = 'scale(' + scaleVal + ')';
+          scanEl.style.opacity = Math.min(1, 0.4 + progress * 0.6);
+        }
+
+        // Parallax floating rocks double-scroll motion
+        if (rockAtras) {
+          const rx = sy * 0.22;
+          const ry = -sy * 0.15;
+          rockAtras.style.transform = 'translate(-50%, -50%) translate3d(' + rx + 'px, ' + ry + 'px, 0) rotate(' + (-16 + progress * 8) + 'deg)';
+        }
+        if (rockMedio) {
+          const rx = -sy * 0.28;
+          const ry = sy * 0.18;
+          rockMedio.style.transform = 'translate(-50%, -50%) translate3d(' + rx + 'px, ' + ry + 'px, 0) rotate(' + (-16 - progress * 10) + 'deg)';
+        }
+        if (rockFront) {
+          const rx = sy * 0.32;
+          const ry = sy * 0.22;
+          rockFront.style.transform = 'translate(-50%, -50%) translate3d(' + rx + 'px, ' + ry + 'px, 0) rotate(' + (-26 + progress * 12) + 'deg)';
+        }
+      }
+
+      window.addEventListener('scroll', updateHeroParallax, { passive: true });
+      if (window.__lenis) {
+        window.__lenis.on('scroll', updateHeroParallax);
+      }
+      updateHeroParallax();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initHeroDoubleScrollAnimation);
+    } else {
+      initHeroDoubleScrollAnimation();
+    }
+  })();
+</script>
+
 </head>
 <body class="" style="">
 	<script async="" src="https://events.framer.com/script?v=2" data-fid="012f01698a79bd2c497a0eaaf626b49408f2e9581facfc40ff033750ad3a4a3f" data-no-nt=""></script>
