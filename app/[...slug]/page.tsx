@@ -5,7 +5,7 @@ import React from "react";
 export default function CatchAllPage() {
   return (
     <iframe
-      src="/alethia/index.html"
+      src={`/alethia/index.html?v=${Date.now()}`}
       title="Alethia Landing Page"
       scrolling="yes"
       style={{
